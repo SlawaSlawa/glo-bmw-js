@@ -1,5 +1,6 @@
 const tabsHandlerElems = document.querySelectorAll('[data-tabs-handler]');
 const tabsFieldElems = document.querySelectorAll('[data-tabs-field]');
+const designTitleElems = document.querySelectorAll('.design__title');
 
 for(const tab of tabsHandlerElems) {
 	tab.addEventListener('click', () => {
@@ -16,6 +17,14 @@ for(const tab of tabsHandlerElems) {
 				item.classList.remove('hidden');
 			}else {
 				item.classList.add('hidden');
+			}
+		});
+
+		designTitleElems.forEach(title => {
+			if (title.classList.contains('hidden')) {
+				title.classList.remove('hidden');
+			}else {
+				title.classList.add('hidden');
 			}
 		});
 	});
