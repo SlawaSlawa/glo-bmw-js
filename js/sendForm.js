@@ -81,4 +81,3 @@ formElems.forEach(formHandler);
 
 
 
-// Как передается форма в функцию когда перебираются formElems
