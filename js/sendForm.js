@@ -33,18 +33,46 @@ const formHandler = (form) => {
 
         const smallElem = document.createElement('small');
 
-        sendData(JSON.stringify(data),
-            (id) => {
-                smallElem.innerHTML ='Ваша заявка № ' + id + '! <br>В ближайшее время с вами свяжемся';
-                smallElem.style.color = 'green';
-                form.append(smallElem);
-            },
-            (error) => {
-                smallElem.textContent ='К сожалению технические неполадки, поробуйте позже!';
-                smallElem.style.color = 'red';
-                form.append(smallElem);
-            });
-        form.reset();
+        let flag = false;
+
+        for (const item in data) {
+        	if (data[item].trim() !== '') {
+        		flag = true;
+        	}else {
+        		flag = false;
+        		break;
+        	}
+        }
+
+        if (flag) {
+            sendData(JSON.stringify(data),
+                (id) => {
+                    smallElem.innerHTML = 'Ваша заявка № ' + id + '! <br>В ближайшее время с вами свяжемся';
+                    smallElem.style.color = 'green';
+                    form.append(smallElem);
+                },
+                (error) => {
+                    smallElem.textContent = 'К сожалению технические неполадки, поробуйте позже!';
+                    smallElem.style.color = 'red';
+            		smallElem.remove();
+                    form.append(smallElem);
+                });
+            form.reset();
+        } else {
+            smallElem.innerHTML = 'Форма не отправлена! Заполните все поля!';
+            smallElem.style.color = 'red';
+            smallElem.remove();
+            form.append(smallElem);
+        }
+
+        form.querySelector('.button').disabled = true;
+
+        setInterval(() => {
+        	form.querySelector('.button').disabled = false;
+            smallElem.remove();
+        }, 5000);
+
+
     });
 }
 
